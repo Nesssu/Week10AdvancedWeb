@@ -6,6 +6,9 @@ const Users = require("../models/User");
 const Todos = require('../models/Todo');
 const jwt = require("jsonwebtoken");
 const { body, validationResult } = require('express-validator')
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({storage});
 
 const authenticateToken = (req, res, next) =>
 {
@@ -23,10 +26,10 @@ const authenticateToken = (req, res, next) =>
   })
 }
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+router.get('/user/register', (req, res) =>
+{
+  res.render('register');
+})
 
 router.post('/user/register',
   body('email').isEmail(),
@@ -74,7 +77,12 @@ router.post('/user/register',
   });
 });
 
-router.post('/user/login', (req, res, next) =>
+router.get('/user/login', (req, res) =>
+{
+  res.render('login');
+})
+
+router.post('/user/login', upload.none(), (req, res, next) =>
 {
   const email = req.body.email;
   const password = req.body.password;
@@ -105,7 +113,7 @@ router.post('/user/login', (req, res, next) =>
               {
                 return res.json({success: false, message: "Token"});
               }
-              return res.json({success: true, token});
+              return res.json({success: true, token}).redirect('/');
             }
           );
         }

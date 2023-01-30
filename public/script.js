@@ -1,5 +1,5 @@
 
-const registerSubmit = document.getElementById("register-submit");
+/*const registerSubmit = document.getElementById("register-submit");
 
 if (registerSubmit !== null)
 {
@@ -65,7 +65,7 @@ if (loginSubmit !== null)
             }
         });
     });
-}
+}*/
 
 
 

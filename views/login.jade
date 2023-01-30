@@ -1,15 +1,22 @@
 extends layout
 
 block content
-  h1= title
+  h1 Login
   br
   br
-  input(type="email", placeholder="Email", name="login-email", id="login-email")
-  br
-  br
-  input(type="password", placeholder="Password", name="login-password", id="login-password")
-  br
-  br
-  input(type="submit", value="Submit", name="login-submit", id="login-submit")
+  form(action="/api/user/login", id="login-form", method="POST")
+    label(for="email") Email 
+    br
+    input(type="email", name="email", id="email", required)
+    br
+    br
+    label(for="password") Password 
+    br
+    input(type="password", name="password", id="password", required)
+    br
+    br
+    button(type="submit") Login
+  script(src="/login.js")
+
 
 

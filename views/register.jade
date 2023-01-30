@@ -1,15 +1,21 @@
 extends layout
 
 block content
-  h1= title
+  h1 Register
   br
   br
-  input(type="email", placeholder="Email", name="register-email", id="register-email")
-  br
-  br
-  input(type="password", placeholder="Password", name="register-password", id="register-password")
-  br
-  br
-  input(type="submit", value="Submit", name="register-submit", id="register-submit")
+  form(action="/api/user/register", method="POST")
+    label(for="email") Email 
+    br
+    input(type="email", name="email", id="email", required)
+    br
+    br
+    label(for="password") Password 
+    br
+    input(type="password", name="password", id="password", required)
+    br
+    br
+    button(type="submit") Register
+
 
 
