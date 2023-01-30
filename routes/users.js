@@ -65,7 +65,7 @@ router.post('/user/register',
             (err, ok) =>
             {
               if(err) throw err;
-              return res.redirect('/login.html');
+              return res.sned({success: true}).redirect('/login.html');
             }
           );
         });
@@ -82,7 +82,7 @@ router.post('/user/login', (req, res, next) =>
   Users.findOne({email: email}, (err, user) =>
   {
     if(err) throw err;
-    if(!user) { return res.status(403).json({message: "Login faile :("}); }
+    if(!user) { return res.status(403).json({success: false, message: "User"}); }
     else
     {
       bcrypt.compare(password, user.password, (err, isMatch) =>
@@ -101,11 +101,15 @@ router.post('/user/login', (req, res, next) =>
             },
             (err, token) =>
             {
-              res.json({success: true, token});
+              if (err)
+              {
+                return res.json({success: false, message: "Token"});
+              }
+              return res.json({success: true, token});
             }
           );
         }
-        else { return res.status(403).json({message: "Login faile :("}); }
+        else { return res.status(403).json({success: false, message: "Password"}); }
       })
     }
   });

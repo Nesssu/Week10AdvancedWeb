@@ -21,8 +21,8 @@ if (registerSubmit !== null)
         },
         body: JSON.stringify(registerBody)
         })
-        .then(response => response)
-        .then(window.location.assign('http://localhost:3000/login.html'));
+        .then(response => response.json())
+        .then(data => console.log(data));
     })
 }
 
@@ -49,8 +49,16 @@ if (loginSubmit !== null)
         },
         body: JSON.stringify(loginBody)
         })
-        .then(response => console.log(response))
-        .then(window.location.assign('http://localhost:3000/'));
+        .then(response => response.json())
+        .then(data =>
+        { 
+            if (data.success)
+            {
+                const token = data.token;
+                localStorage.setItem('auth_token', token);
+                window.location.assign("http://localhost:3000/");
+            }
+        });
     });
 }
 
