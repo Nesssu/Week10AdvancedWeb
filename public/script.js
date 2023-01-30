@@ -21,8 +21,13 @@ if (registerSubmit !== null)
         },
         body: JSON.stringify(registerBody)
         })
-        .then(response => response.json())
-        .then(data => console.log(data));
+        .then(response => 
+        {
+            if (response.status === 200)
+            {
+                window.location.assign("http://localhost:3000/login.html");
+            }
+        });
     })
 }
 

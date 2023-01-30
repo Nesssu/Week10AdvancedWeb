@@ -49,7 +49,7 @@ router.post('/user/register',
   Users.findOne({email: email}, (err, user) =>
   {
     if(err) { throw err };
-    if(user) { return res.status(403).json({email: "Email already in use."}); }
+    if(user) { return res.status(403).json({success: false, email: "Email already in use."}); }
     else
     {
       bcrypt.genSalt(10, (err, salt) =>
@@ -65,7 +65,7 @@ router.post('/user/register',
             (err, ok) =>
             {
               if(err) throw err;
-              return res.sned({success: true}).redirect('/login.html');
+              return res.redirect('/login.html');
             }
           );
         });
