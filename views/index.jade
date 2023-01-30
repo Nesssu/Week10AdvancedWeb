@@ -2,4 +2,12 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  if signedIn == false
+    a(href="http://localhost:3000/login.html") Login 
+    br
+    br
+    a(href="http://localhost:3000/register.html") Register
+  else
+    p= email
+    button() Logout
+  script(src="/index.js")

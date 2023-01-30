@@ -1,9 +1,25 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const jwt = require("jsonwebtoken");
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+const authenticateToken = (req, res, next) =>
+{
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (token == null) return res.render('index', { title: 'Express', signedIn: false});
+
+  jwt.verify(token, 'apples', (err, user) =>
+  {
+    if (err) return res.render('index', { title: 'Express', signedIn: false});
+    req.user = user;
+    next();
+  })
+}
+
+router.get('/', authenticateToken, (req, res, next) =>
+{
+  const email = req.user.email;
+  return res.render('index', { title: 'Express', signedIn: true, email: email });
 });
 
 router.get('/register.html', (req, res, next) =>
