@@ -12,15 +12,15 @@ else
   
 const initializeCode = () =>
 {
-    document.getElementById("login-form").addEventListener("submit", onLogin);
+    document.getElementById("register-form").addEventListener("submit", onRegister);
 }
 
-const onLogin = (event) =>
+const onRegister = (event) =>
 {
     event.preventDefault();
     const formData = new FormData(event.target);
 
-    fetch('/api/user/login', 
+    fetch('/api/user/register', 
     {
         method: "POST",
         body: formData
@@ -28,14 +28,13 @@ const onLogin = (event) =>
     .then((response) => response.json())
     .then((data) =>
         {
-            if (data.token)
+            if (data.message)
             {
-                localStorage.setItem('auth_token', data.token);
-                window.location.href="/";
+                document.getElementById("register-error").innerText = data.message;
             }
             else
             {
-                document.getElementById("login-error").innerText = data.message;
+                window.location.href="/login.html";
             }
         })
 }

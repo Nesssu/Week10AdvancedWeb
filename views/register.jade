@@ -4,7 +4,10 @@ block content
   h1 Register
   br
   br
-  form(action="/api/user/register", method="POST")
+  p(id="register-error")
+  br
+  br
+  form(action="/api/user/register", id="register-form", method="POST")
     label(for="email") Email 
     br
     input(type="email", name="email", id="email", required)
@@ -16,6 +19,6 @@ block content
     br
     br
     input(type="submit", value="Register")
-
+  script(src="register.js")
 
 

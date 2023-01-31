@@ -32,6 +32,7 @@ router.get('/user/register', (req, res) =>
 })
 
 router.post('/user/register',
+  upload.none(),
   body('email').isEmail(),
   body('password').isStrongPassword({
     minLength: 8,
@@ -44,7 +45,10 @@ router.post('/user/register',
 {
   const errors = validationResult(req);
 
-  if (!errors.isEmpty()) { return res.status(400).send(errors) }
+  if (!errors.isEmpty())
+  {
+    return res.json({message: "Password is not strong enough"});
+  }
 
   const email = req.body.email;
   const password = req.body.password;
@@ -52,7 +56,7 @@ router.post('/user/register',
   Users.findOne({email: email}, (err, user) =>
   {
     if(err) { throw err };
-    if(user) { return res.status(403).json({success: false, email: "Email already in use."}); }
+    if(user) { return res.status(403).json({message: "Email already in use."}); }
     else
     {
       bcrypt.genSalt(10, (err, salt) =>
@@ -68,7 +72,7 @@ router.post('/user/register',
             (err, ok) =>
             {
               if(err) throw err;
-              return res.redirect('/login.html');
+              return res.json({});
             }
           );
         });
@@ -90,7 +94,7 @@ router.post('/user/login', upload.none(), (req, res, next) =>
   Users.findOne({email: email}, (err, user) =>
   {
     if(err) throw err;
-    if(!user) { return res.status(403).json({success: false, message: "User"}); }
+    if(!user) { return res.status(403).json({message: "Invalid credentials"}); }
     else
     {
       bcrypt.compare(password, user.password, (err, isMatch) =>
@@ -111,13 +115,13 @@ router.post('/user/login', upload.none(), (req, res, next) =>
             {
               if (err)
               {
-                return res.json({success: false, message: "Token"});
+                return res.json({message: "Invalid credentials"});
               }
-              return res.json({success: true, token});
+              return res.json({token});
             }
           );
         }
-        else { return res.status(403).json({success: false, message: "Password"}); }
+        else { return res.status(403).json({message: "Invalid credentials"}); }
       })
     }
   });
