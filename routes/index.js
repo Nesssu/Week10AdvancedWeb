@@ -6,11 +6,12 @@ const authenticateToken = (req, res, next) =>
 {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-  if (token == null) return res.render('index', { title: 'Null', signedIn: false});
+  console.log(token);
+  if (token == null) return res.render('index', { title: 'Express', signedIn: false});
 
   jwt.verify(token, 'apples', (err, user) =>
   {
-    if (err) return res.render('index', { title: 'Token', signedIn: false});
+    if (err) return res.render('index', { title: 'Express', signedIn: false});
     req.user = user;
     next();
   })
@@ -19,6 +20,7 @@ const authenticateToken = (req, res, next) =>
 router.get('/', authenticateToken, (req, res, next) =>
 {
   const email = req.user.email;
+  console.log(email);
   return res.render('index', { title: 'Express', signedIn: true, email: email });
 });
 

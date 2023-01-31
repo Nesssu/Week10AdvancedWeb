@@ -3,10 +3,10 @@ extends layout
 block content
   h1= title
   if signedIn == false
-    a(href="http://localhost:3000/login.html") Login 
+    a(href="/login.html") Login 
     br
     br
-    a(href="http://localhost:3000/register.html") Register
+    a(href="/register.html") Register
   else
     p= email
     button() Logout

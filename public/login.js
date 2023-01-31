@@ -31,7 +31,14 @@ const onLogin = (event) =>
             if (data.token)
             {
                 localStorage.setItem('auth_token', data.token);
-                window.location.assign("/");
+                return fetch('/',
+                {
+                    method: "GET",
+                    headers: {
+                        authorization: "Bearer " + data.token
+                    }
+                })
+                .then(response => response)
             }
         })
 }
