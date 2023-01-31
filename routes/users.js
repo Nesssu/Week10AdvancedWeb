@@ -167,6 +167,33 @@ router.post('/todos', authenticateToken, (req, res, next) =>
     })
 });
 
+router.get('/todos/list', authenticateToken, (req, res, next) =>
+{
+  const email = req.user.email;
+
+  Users
+    .findOne({"email": email})
+    .exec((err, user) =>
+    {
+      if (err) next(err);
+      Todos
+        .findOne({"user": user._id})
+        .exec((error, result) =>
+        {
+          if (error) next(error);
+          
+          if (result === null)
+          {
+            return res.render('items', {items: []});
+          }
+          else
+          {
+            return res.render('items', {items: result.items});
+          }
+        });
+    });
+});
+
 router.get('/private', authenticateToken, (req, res, next) =>
 {
   res
