@@ -16,7 +16,7 @@ const initializeCode = () =>
     const content = document.getElementById("content");
     
     fetch('/', {
-        method: "GET",
+        method: "POST",
         headers: {
             "authorization": "Bearer " + token
         }
