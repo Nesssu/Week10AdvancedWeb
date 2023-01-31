@@ -1,12 +1,6 @@
 extends layout
 
 block content
-  h1= title
-  if signedIn == false
-    a(href="/login.html") Login 
-    br
-    br
-    a(href="/register.html") Register
-  else
-    p= email
-    button() Logout
+  p=email
+  button(onclick="logout()", id="logout") Logout
+  script(src="home.js")

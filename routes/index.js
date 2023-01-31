@@ -2,27 +2,25 @@ const express = require('express');
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 
-const authenticateToken = (req, res, next) =>
+router.get('/', (req, res) =>
+{
+  return res.render('index', {title: "Express", email: "Email"});
+});
+
+router.post('/', (req, res) =>
 {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-  console.log(token);
-  if (token == null) return res.render('index', { title: 'Express', signedIn: false});
+  
+  if (token == null) return res.render('error', {title: "Express"});
 
   jwt.verify(token, 'apples', (err, user) =>
   {
-    if (err) return res.render('index', { title: 'Express', signedIn: false});
-    req.user = user;
-    next();
-  })
-}
+    if (err) return res.render('error', {title: "Express"});
 
-router.get('/', authenticateToken, (req, res, next) =>
-{
-  const email = req.user.email;
-  console.log(email);
-  return res.render('index', { title: 'Express', signedIn: true, email: email });
-});
+    return res.render('index', {title: "Express", email: user.email});
+  })
+})
 
 router.get('/register.html', (req, res, next) =>
 {
