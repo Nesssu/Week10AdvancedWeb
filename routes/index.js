@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 
-router.get('/', (req, res) =>
+router.get('/', (req, res, next) =>
 {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
-  if (token == null) return res.render('error', {title: "Express"});
+  if (token == null) return res.render('error', {title: "Express"})
 
   jwt.verify(token, 'apples', (err, user) =>
   {

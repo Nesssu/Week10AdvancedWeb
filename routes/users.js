@@ -113,7 +113,7 @@ router.post('/user/login', upload.none(), (req, res, next) =>
               {
                 return res.json({success: false, message: "Token"});
               }
-              return res.json({success: true, token}).redirect('/');
+              return res.json({success: true, token});
             }
           );
         }

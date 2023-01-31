@@ -24,7 +24,6 @@ const initializeCode = () =>
     .then(response => response.text())
     .then(page =>
         {
-            console.log(page);
             content.innerHTML = page
         })
 }
