@@ -4,14 +4,9 @@ const jwt = require("jsonwebtoken");
 
 router.get('/', (req, res) =>
 {
-  return res.render('index', {title: "Express", email: "Email"});
-});
-
-router.post('/', (req, res) =>
-{
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-  
+
   if (token == null) return res.render('error', {title: "Express"});
 
   jwt.verify(token, 'apples', (err, user) =>
@@ -20,7 +15,7 @@ router.post('/', (req, res) =>
 
     return res.render('index', {title: "Express", email: user.email});
   })
-})
+});
 
 router.get('/register.html', (req, res, next) =>
 {

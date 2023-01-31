@@ -16,7 +16,7 @@ const initializeCode = () =>
     const content = document.getElementById("content");
     
     fetch('/', {
-        method: "POST",
+        method: "GET",
         headers: {
             "authorization": "Bearer " + token
         }
@@ -24,6 +24,7 @@ const initializeCode = () =>
     .then(response => response.text())
     .then(page =>
         {
+            console.log(page);
             content.innerHTML = page
         })
 }
